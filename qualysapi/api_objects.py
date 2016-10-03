@@ -48,7 +48,8 @@ class ReportTemplate(object):
     def run(self,conn,rformat,title):
         call = '/api/2.0/fo/report'
         parameters = {'action': 'launch','template_id': self.id,'report_title': title,'output_format': rformat}
-        return conn.request(call, parameters)
+        repData = objectify.fromstring(conn.request(call, parameters)).RESPONSE.ITEM_LIST.ITEM.VALUE
+        return repData
 
 class Report(object):
     def __init__(self, expiration_datetime, id, launch_datetime, output_format, size, status, type, user_login, title):
